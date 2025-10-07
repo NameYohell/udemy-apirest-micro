@@ -1,105 +1,84 @@
-package com.nameyohell.usuarios.micro_usuarios.model;
+package com.nameyohell.usuarios.micro_usuarios.dto;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Entidad que representa un usuario
+ * DTO de respuesta para Usuario
  */
-@Entity
-@Table(name = "usuarios")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UsuarioResponseDTO {
+    
     private Long id;
-
-    @Column(nullable = false, length = 100)
     private String nombre;
-    
-    @Column(unique = true, length = 150)
     private String email;
-    
-    @Column(length = 20)
     private String telefono;
-    
-    @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
-    
-    @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
-
+    
     // Constructores
-    public Usuario() {
-        this.fechaCreacion = LocalDateTime.now();
-        this.fechaActualizacion = LocalDateTime.now();
-    }
-
-    public Usuario(String nombre, String email, String telefono) {
-        this();
+    public UsuarioResponseDTO() {}
+    
+    public UsuarioResponseDTO(Long id, String nombre, String email, String telefono, 
+                             LocalDateTime fechaCreacion, LocalDateTime fechaActualizacion) {
+        this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
     }
-
-    // Métodos del ciclo de vida de JPA
-    @PreUpdate
-    public void preUpdate() {
-        this.fechaActualizacion = LocalDateTime.now();
-    }
-
+    
     // Getters y setters
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
-
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
     public String getEmail() {
         return email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public String getTelefono() {
         return telefono;
     }
-
+    
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+    
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
-
+    
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-
+    
     public LocalDateTime getFechaActualizacion() {
         return fechaActualizacion;
     }
-
+    
     public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
-
+    
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "UsuarioResponseDTO{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", email='" + email + '\'' +
