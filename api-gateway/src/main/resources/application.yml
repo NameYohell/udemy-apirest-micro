@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: micro-usuarios
+          uri: lb://micro-usuarios
+          predicates:
+            - Path=/usuarios/**
+        - id: micro-direcciones
+          uri: lb://micro-direcciones
+          predicates:
+            - Path=/direcciones/**
