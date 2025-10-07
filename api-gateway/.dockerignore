@@ -1,0 +1,18 @@
+# Ignorar archivos innecesarios en Docker builds
+.git
+.gitignore
+README.md
+.env
+.DS_Store
+.idea
+.vscode
+*.md
+node_modules
+.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+!**/src/main/**
+!**/src/test/**
+
+# Ignorar todo excepto el JAR target
+*
+!target/*.jar
