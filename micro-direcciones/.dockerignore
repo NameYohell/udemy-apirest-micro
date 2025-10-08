@@ -8,11 +8,5 @@ README.md
 .vscode
 *.md
 node_modules
-.mvn/wrapper/maven-wrapper.jar
-!.mvn/wrapper/maven-wrapper.properties
-!**/src/main/**
-!**/src/test/**
-
-# Ignorar todo excepto el JAR target
-*
+target/
 !target/*.jar

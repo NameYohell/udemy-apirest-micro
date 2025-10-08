@@ -1,0 +1,759 @@
+{
+	"info": {
+		"_postman_id": "12345678-abcd-1234-efgh-123456789012",
+		"name": "Microservicios API - Udemy Project",
+		"description": "Colección completa para probar los microservicios del proyecto Udemy API REST con Spring Boot, API Gateway, Eureka Server y MySQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🌐 API Gateway",
+			"item": [
+				{
+					"name": "👥 Usuarios",
+					"item": [
+						{
+							"name": "GET - Listar todos los usuarios",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios"]
+								}
+							}
+						},
+						{
+							"name": "GET - Obtener usuario por ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios/1",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios", "1"]
+								}
+							}
+						},
+						{
+							"name": "POST - Crear nuevo usuario",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nombre\": \"Carlos Mendoza\",\n  \"email\": \"carlos.mendoza@email.com\",\n  \"telefono\": \"+56933333333\"\n}"
+								},
+								"url": {
+									"raw": "{{gateway_url}}/usuarios",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios"]
+								}
+							}
+						},
+						{
+							"name": "PUT - Actualizar usuario",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nombre\": \"Juan Pérez Actualizado\",\n  \"email\": \"juan.perez.updated@email.com\",\n  \"telefono\": \"+56944444444\"\n}"
+								},
+								"url": {
+									"raw": "{{gateway_url}}/usuarios/1",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios", "1"]
+								}
+							}
+						},
+						{
+							"name": "DELETE - Eliminar usuario",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios/4",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios", "4"]
+								}
+							}
+						},
+						{
+							"name": "GET - Buscar usuarios por nombre",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios/buscar?nombre=Juan",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios", "buscar"],
+									"query": [
+										{
+											"key": "nombre",
+											"value": "Juan"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "GET - Verificar si existe email",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios/email/existe?email=juan.perez@email.com",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios", "email", "existe"],
+									"query": [
+										{
+											"key": "email",
+											"value": "juan.perez@email.com"
+										}
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "🏠 Direcciones",
+					"item": [
+						{
+							"name": "GET - Listar todas las direcciones",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/direcciones",
+									"host": ["{{gateway_url}}"],
+									"path": ["direcciones"]
+								}
+							}
+						},
+						{
+							"name": "GET - Obtener dirección por ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/direcciones/1",
+									"host": ["{{gateway_url}}"],
+									"path": ["direcciones", "1"]
+								}
+							}
+						},
+						{
+							"name": "POST - Crear nueva dirección",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"calle\": \"Av. Providencia 123\",\n  \"ciudad\": \"Santiago\",\n  \"codigoPostal\": \"7500000\",\n  \"pais\": \"Chile\",\n  \"usuarioId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{gateway_url}}/direcciones",
+									"host": ["{{gateway_url}}"],
+									"path": ["direcciones"]
+								}
+							}
+						},
+						{
+							"name": "PUT - Actualizar dirección",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"calle\": \"Av. Las Condes 456\",\n  \"ciudad\": \"Santiago\",\n  \"codigoPostal\": \"7550000\",\n  \"pais\": \"Chile\",\n  \"usuarioId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{gateway_url}}/direcciones/1",
+									"host": ["{{gateway_url}}"],
+									"path": ["direcciones", "1"]
+								}
+							}
+						},
+						{
+							"name": "DELETE - Eliminar dirección",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{gateway_url}}/direcciones/1",
+									"host": ["{{gateway_url}}"],
+									"path": ["direcciones", "1"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "⚙️ Gateway Admin",
+					"item": [
+						{
+							"name": "GET - Health Check Gateway",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/actuator/health",
+									"host": ["{{gateway_url}}"],
+									"path": ["actuator", "health"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Información del Gateway ✅",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/actuator/info",
+									"host": ["{{gateway_url}}"],
+									"path": ["actuator", "info"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Rutas configuradas",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/actuator/gateway/routes",
+									"host": ["{{gateway_url}}"],
+									"path": ["actuator", "gateway", "routes"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Métricas del Gateway",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/actuator/metrics",
+									"host": ["{{gateway_url}}"],
+									"path": ["actuator", "metrics"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Todos los endpoints Actuator",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/actuator",
+									"host": ["{{gateway_url}}"],
+									"path": ["actuator"]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "🎯 Microservicios Directos",
+			"item": [
+				{
+					"name": "👥 Microservicio Usuarios (8081)",
+					"item": [
+						{
+							"name": "GET - Health Check Usuarios ✅",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{usuarios_url}}/actuator/health",
+									"host": ["{{usuarios_url}}"],
+									"path": ["actuator", "health"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Usuarios (Directo) ✅",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{usuarios_url}}/usuarios",
+									"host": ["{{usuarios_url}}"],
+									"path": ["usuarios"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET - Usuario por ID (Directo)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{usuarios_url}}/usuarios/1",
+									"host": ["{{usuarios_url}}"],
+									"path": ["usuarios", "1"]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "🏠 Microservicio Direcciones (8082)",
+					"item": [
+						{
+							"name": "GET - Health Check Direcciones",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{direcciones_url}}/actuator/health",
+									"host": ["{{direcciones_url}}"],
+									"path": ["actuator", "health"]
+								}
+							}
+						},
+						{
+							"name": "GET - Direcciones (Directo)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{direcciones_url}}/direcciones",
+									"host": ["{{direcciones_url}}"],
+									"path": ["direcciones"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "🔧 Infraestructura",
+			"item": [
+				{
+					"name": "🌟 Eureka Server",
+					"item": [
+						{
+							"name": "GET - Dashboard Eureka",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/html"
+									}
+								],
+								"url": {
+									"raw": "{{eureka_url}}/",
+									"host": ["{{eureka_url}}"],
+									"path": [""]
+								}
+							}
+						},
+						{
+							"name": "GET - Aplicaciones registradas",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{eureka_url}}/eureka/apps",
+									"host": ["{{eureka_url}}"],
+									"path": ["eureka", "apps"]
+								}
+							}
+						},
+						{
+							"name": "GET - Health Check Eureka",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{eureka_url}}/actuator/health",
+									"host": ["{{eureka_url}}"],
+									"path": ["actuator", "health"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "🧪 Tests de Integración",
+			"item": [
+				{
+					"name": "📝 Flujo Completo Usuario + Dirección",
+					"item": [
+						{
+							"name": "1️⃣ Crear Usuario de Test",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nombre\": \"Test User Integration\",\n  \"email\": \"test.integration@email.com\",\n  \"telefono\": \"+56999888777\"\n}"
+								},
+								"url": {
+									"raw": "{{gateway_url}}/usuarios",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2️⃣ Crear Dirección para Usuario Test",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"calle\": \"Test Integration Street 999\",\n  \"ciudad\": \"Santiago Test\",\n  \"codigoPostal\": \"9999999\",\n  \"pais\": \"Chile\",\n  \"usuarioId\": 5\n}"
+								},
+								"url": {
+									"raw": "{{gateway_url}}/direcciones",
+									"host": ["{{gateway_url}}"],
+									"path": ["direcciones"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3️⃣ Verificar Usuario Creado",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios/email/existe?email=test.integration@email.com",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios", "email", "existe"],
+									"query": [
+										{
+											"key": "email",
+											"value": "test.integration@email.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "⚡ Tests de Rendimiento",
+					"item": [
+						{
+							"name": "🔥 Load Test - Gateway vs Directo",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "🎯 Comparación Gateway",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/usuarios/1",
+									"host": ["{{gateway_url}}"],
+									"path": ["usuarios", "1"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "🎯 Comparación Directo",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{usuarios_url}}/usuarios/1",
+									"host": ["{{usuarios_url}}"],
+									"path": ["usuarios", "1"]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "🔍 Diagnóstico y Debugging",
+			"item": [
+				{
+					"name": "🚦 Status Check Completo",
+					"item": [
+						{
+							"name": "✅ 1. Eureka Health",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{eureka_url}}/actuator/health",
+									"host": ["{{eureka_url}}"],
+									"path": ["actuator", "health"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "✅ 2. Gateway Health",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{gateway_url}}/actuator/health",
+									"host": ["{{gateway_url}}"],
+									"path": ["actuator", "health"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "✅ 3. Usuarios Health",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{usuarios_url}}/actuator/health",
+									"host": ["{{usuarios_url}}"],
+									"path": ["actuator", "health"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "✅ 4. Direcciones Health",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{direcciones_url}}/actuator/health",
+									"host": ["{{direcciones_url}}"],
+									"path": ["actuator", "health"]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "gateway_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "usuarios_url",
+			"value": "http://localhost:8081"
+		},
+		{
+			"key": "direcciones_url",
+			"value": "http://localhost:8082"
+		},
+		{
+			"key": "eureka_url",
+			"value": "http://localhost:8761"
+		}
+	]
+}

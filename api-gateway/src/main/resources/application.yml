@@ -1,12 +1,27 @@
 spring:
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
-        - id: micro-usuarios
-          uri: lb://micro-usuarios
+        - id: micro-usuarios-service
+          uri: lb://MICRO-USUARIOS
           predicates:
             - Path=/usuarios/**
-        - id: micro-direcciones
-          uri: lb://micro-direcciones
+          filters:
+            - StripPrefix=0
+        - id: micro-direcciones-service
+          uri: lb://MICRO-DIRECCIONES
           predicates:
             - Path=/direcciones/**
+          filters:
+            - StripPrefix=0
+        # Ruta para health checks
+        - id: health-check
+          uri: lb://MICRO-USUARIOS
+          predicates:
+            - Path=/actuator/health
+          filters:
+            - StripPrefix=0
