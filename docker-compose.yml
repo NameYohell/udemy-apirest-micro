@@ -46,7 +46,7 @@ services:
       dockerfile: Dockerfile
     container_name: api-gateway
     ports:
-      - "8080:8080"
+      - "8888:8888"
     depends_on:
       eureka-server:
         condition: service_healthy
