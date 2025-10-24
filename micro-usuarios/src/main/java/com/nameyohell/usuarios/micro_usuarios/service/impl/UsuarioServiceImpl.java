@@ -1,5 +1,6 @@
 package com.nameyohell.usuarios.micro_usuarios.service.impl;
 
+import com.nameyohell.usuarios.micro_usuarios.exception.EmailDuplicadoException;
 import com.nameyohell.usuarios.micro_usuarios.model.Usuario;
 import com.nameyohell.usuarios.micro_usuarios.repository.UsuarioRepository;
 import com.nameyohell.usuarios.micro_usuarios.service.UsuarioService;
@@ -54,7 +55,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         
         // Verificar si ya existe un usuario con el mismo email
         if (StringUtils.hasText(usuario.getEmail()) && existeUsuarioPorEmail(usuario.getEmail())) {
-            throw new IllegalArgumentException("Ya existe un usuario con el email: " + usuario.getEmail());
+            throw new EmailDuplicadoException(usuario.getEmail());
         }
         
         Usuario usuarioGuardado = usuarioRepository.save(usuario);

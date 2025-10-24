@@ -24,6 +24,7 @@ call :build_service "eureka-server"
 call :build_service "api-gateway"
 call :build_service "micro-usuarios"
 call :build_service "micro-direcciones"
+call :build_service "micro-comentarios"
 
 echo 🎉 ¡Todos los microservicios construidos exitosamente!
 echo 💡 Ahora puedes ejecutar: docker-compose up --build

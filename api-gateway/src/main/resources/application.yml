@@ -18,6 +18,12 @@ spring:
             - Path=/direcciones/**
           filters:
             - StripPrefix=0
+        - id: micro-comentarios-service
+          uri: lb://MICRO-COMENTARIOS
+          predicates:
+            - Path=/api/comentarios/**
+          filters:
+            - StripPrefix=0
         # Ruta para health checks
         - id: health-check
           uri: lb://MICRO-USUARIOS

@@ -75,7 +75,7 @@ public class DireccionServiceImpl implements DireccionService {
         Direccion direccionAActualizar = direccionExistente.get();
         direccionAActualizar.setCalle(direccion.getCalle());
         direccionAActualizar.setCiudad(direccion.getCiudad());
-        direccionAActualizar.setEstado(direccion.getEstado());
+        direccionAActualizar.setComuna(direccion.getComuna());
         direccionAActualizar.setCodigoPostal(direccion.getCodigoPostal());
         direccionAActualizar.setPais(direccion.getPais());
         direccionAActualizar.setUsuarioId(direccion.getUsuarioId());

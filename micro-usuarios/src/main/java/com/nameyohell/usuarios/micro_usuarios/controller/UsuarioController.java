@@ -1,5 +1,6 @@
 package com.nameyohell.usuarios.micro_usuarios.controller;
 
+import com.nameyohell.usuarios.micro_usuarios.exception.EmailDuplicadoException;
 import com.nameyohell.usuarios.micro_usuarios.model.Usuario;
 import com.nameyohell.usuarios.micro_usuarios.service.UsuarioService;
 import org.slf4j.Logger;
@@ -114,5 +115,44 @@ public class UsuarioController {
         logger.info("GET /usuarios/email/existe?email={} - Verificando email", email);
         boolean existe = usuarioService.existeUsuarioPorEmail(email);
         return ResponseEntity.ok(existe);
+    }
+
+    /**
+     * Manejador de excepciones para emails duplicados
+     */
+    @ExceptionHandler(EmailDuplicadoException.class)
+    public ResponseEntity<ErrorResponse> handleEmailDuplicado(EmailDuplicadoException e) {
+        logger.warn("Error de email duplicado: {}", e.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(
+            "EMAIL_DUPLICADO", 
+            e.getMessage(),
+            System.currentTimeMillis()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    /**
+     * Clase para estructurar las respuestas de error
+     */
+    public static class ErrorResponse {
+        private String codigo;
+        private String mensaje;
+        private long timestamp;
+
+        public ErrorResponse(String codigo, String mensaje, long timestamp) {
+            this.codigo = codigo;
+            this.mensaje = mensaje;
+            this.timestamp = timestamp;
+        }
+
+        // Getters
+        public String getCodigo() { return codigo; }
+        public String getMensaje() { return mensaje; }
+        public long getTimestamp() { return timestamp; }
+
+        // Setters
+        public void setCodigo(String codigo) { this.codigo = codigo; }
+        public void setMensaje(String mensaje) { this.mensaje = mensaje; }
+        public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
     }
 }

@@ -41,9 +41,9 @@ public interface DireccionRepository extends JpaRepository<Direccion, Long> {
     List<Direccion> findByPaisIgnoreCase(String pais);
     
     /**
-     * Busca direcciones por estado (ignorando mayúsculas/minúsculas)
-     * @param estado Estado a buscar
-     * @return Lista de direcciones del estado
+     * Busca direcciones por comuna (ignorando mayúsculas/minúsculas)
+     * @param comuna Comuna a buscar
+     * @return Lista de direcciones de la comuna
      */
-    List<Direccion> findByEstadoIgnoreCase(String estado);
+    List<Direccion> findByComunaIgnoreCase(String comuna);
 }

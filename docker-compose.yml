@@ -114,6 +114,32 @@ services:
       timeout: 10s
       retries: 5
 
+  # Microservicio de Comentarios
+  micro-comentarios:
+    build:
+      context: ./micro-comentarios
+      dockerfile: Dockerfile
+    container_name: micro-comentarios
+    ports:
+      - "8083:8083"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/eureka_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=mipasswordsegura
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 # Volúmenes para persistencia de datos
 volumes:
   mysql_data:

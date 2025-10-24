@@ -19,7 +19,7 @@ public class Direccion {
     @Column(nullable = false)
     private String ciudad;
     
-    private String estado;
+    private String comuna;
     
     @Column(name = "codigo_postal")
     private String codigoPostal;
@@ -33,10 +33,10 @@ public class Direccion {
     // Constructores
     public Direccion() {}
 
-    public Direccion(String calle, String ciudad, String estado, String codigoPostal, String pais, Long usuarioId) {
+    public Direccion(String calle, String ciudad, String comuna, String codigoPostal, String pais, Long usuarioId) {
         this.calle = calle;
         this.ciudad = ciudad;
-        this.estado = estado;
+        this.comuna = comuna;
         this.codigoPostal = codigoPostal;
         this.pais = pais;
         this.usuarioId = usuarioId;
@@ -67,12 +67,12 @@ public class Direccion {
         this.ciudad = ciudad;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getComuna() {
+        return comuna;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setComuna(String comuna) {
+        this.comuna = comuna;
     }
 
     public String getCodigoPostal() {
@@ -105,7 +105,7 @@ public class Direccion {
                 "id=" + id +
                 ", calle='" + calle + '\'' +
                 ", ciudad='" + ciudad + '\'' +
-                ", estado='" + estado + '\'' +
+                ", comuna='" + comuna + '\'' +
                 ", codigoPostal='" + codigoPostal + '\'' +
                 ", pais='" + pais + '\'' +
                 ", usuarioId=" + usuarioId +

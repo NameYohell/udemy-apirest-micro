@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS direcciones (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     calle VARCHAR(255) NOT NULL,
     ciudad VARCHAR(100) NOT NULL,
-    estado VARCHAR(100),
+    comuna VARCHAR(100),
     codigo_postal VARCHAR(20),
     pais VARCHAR(100) NOT NULL,
     usuario_id BIGINT NOT NULL,
@@ -43,11 +43,11 @@ INSERT INTO usuarios (nombre, email, telefono) VALUES
 ('Ana Martínez', 'ana.martinez@email.com', '+56922222222');
 
 -- Datos de ejemplo para direcciones
-INSERT INTO direcciones (calle, ciudad, estado, codigo_postal, pais, usuario_id) VALUES 
-('Av. Providencia 1234', 'Santiago', 'Región Metropolitana', '7500000', 'Chile', 1),
-('Calle Las Condes 5678', 'Santiago', 'Región Metropolitana', '7550000', 'Chile', 1),
-('Av. Valparaíso 999', 'Viña del Mar', 'Región de Valparaíso', '2520000', 'Chile', 2),
-('Calle Libertad 456', 'Concepción', 'Región del Biobío', '4030000', 'Chile', 3),
+INSERT INTO direcciones (calle, ciudad, comuna, codigo_postal, pais, usuario_id) VALUES 
+('Av. Providencia 1234', 'Santiago', 'Providencia', '7500000', 'Chile', 1),
+('Calle Las Condes 5678', 'Santiago', 'Las Condes', '7550000', 'Chile', 1),
+('Av. Valparaíso 999', 'Viña del Mar', 'Viña del Mar', '2520000', 'Chile', 2),
+('Calle Libertad 456', 'Concepción', 'Concepción', '4030000', 'Chile', 3),
 ('Av. Alemania 789', 'Temuco', 'Región de La Araucanía', '4780000', 'Chile', 4);
 
 -- Mostrar resumen de datos insertados

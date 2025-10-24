@@ -1,474 +1,375 @@
-# 🏗️ Microservicios con Spring Boot y Docker
+# 🏗️ Microservicios Spring Boot - Backend
 
-Este proyecto implementa una arquitectura completa de microservicios usando **Spring Boot 3.2.12**, **Java 21**, **Eureka Server** para service discovery, y **Docker** para containerización.
+Sistema de microservicios construido con Spring Boot, Spring Cloud y Eureka Server para gestión de usuarios, direcciones y comentarios con arquitectura distribuida.
 
-## 📁 Estructura del Proyecto
+## 🎯 Arquitectura de Microservicios
 
+```mermaid
+graph TB
+    A[Frontend Angular] --> B[API Gateway :8888]
+    B --> C[Eureka Server :8761]
+    B --> D[Micro-Usuarios :8081]
+    B --> E[Micro-Direcciones :8082]
+    B --> F[Micro-Comentarios :8083]
+    D --> G[(MySQL Database)]
+    E --> G
+    F --> G
 ```
-udemy-apirest-ms/
-├── eureka-server/          # Servidor de registro de servicios (Puerto 8761)
-├── api-gateway/            # Gateway de entrada y enrutamiento (Puerto 8080)
-├── micro-usuarios/         # Microservicio de gestión de usuarios (Puerto 8081)
-├── micro-direcciones/      # Microservicio de gestión de direcciones (Puerto 8082)
-├── docker-compose.yml      # Orquestación de contenedores
-├── init-db.sql            # Script de inicialización de BD
-├── build-all.bat          # Script de construcción para Windows
-├── build-all.sh           # Script de construcción para Linux/Mac
-├── Microservicios-*.json  # Colección de Postman para pruebas
-└── README.md              # Este archivo
-```
+
+## 🚀 Servicios Incluidos
+
+| Servicio | Puerto | Descripción | Endpoints |
+|----------|--------|-------------|-----------|
+| **API Gateway** | 8888 | Gateway central con CORS y routing | `/api/*` |
+| **Eureka Server** | 8761 | Service Discovery y Registry | `/eureka` |
+| **Micro-Usuarios** | 8081 | Gestión de usuarios | `/usuarios` |
+| **Micro-Direcciones** | 8082 | Gestión de direcciones por usuario | `/direcciones` |
+| **Micro-Comentarios** | 8083 | Gestión de comentarios por usuario | `/comentarios` |
+| **MySQL Database** | 3306 | Base de datos relacional | - |
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **Java 21** - Lenguaje de programación
-- **Spring Boot 3.2.12** - Framework principal
-- **Spring Cloud 2023.0.4** - Suite de microservicios
-- **Eureka Server** - Service Discovery
-- **Spring Cloud Gateway** - API Gateway y Load Balancer
-- **MySQL 8** - Base de datos relacional
-- **Docker & Docker Compose** - Containerización y orquestación
-- **Maven 3.9.11** - Gestión de dependencias y construcción
-- **Spring Boot Actuator** - Monitoreo y métricas
+### Core Framework
+- **Spring Boot** 3.x - Framework principal
+- **Spring Cloud** 2023.x - Microservicios
+- **Spring Data JPA** - Persistencia de datos
+- **Spring Web** - APIs REST
+- **Netflix Eureka** - Service Discovery
 
-## 🚀 Guía Completa de Instalación
+### Base de Datos
+- **MySQL** 8.0 - Base de datos principal
+- **H2 Database** - Testing (opcional)
 
-### 📋 Prerrequisitos
+### Infraestructura
+- **Docker & Docker Compose** - Containerización
+- **Maven** - Gestión de dependencias
+- **Postman Collections** - Testing de APIs
 
-Antes de instalar, asegúrate de tener instalado:
+## 📦 Instalación Rápida
 
-- **Docker Desktop** (versión 20.10+) y **Docker Compose** 
-- **Java 21** (solo para desarrollo local - opcional)
-- **Git** para clonar el repositorio
-- **Postman** (opcional, para pruebas con la colección incluida)
+### 🐳 Método Recomendado: Docker Compose
 
-### 🔧 Instalación Paso a Paso
-
-#### **Paso 1: Clonar el Repositorio**
 ```bash
-git clone https://github.com/NameYohell/udemy-apirest-micro.git
+# Clonar el repositorio
+git clone <repository-url>
 cd udemy-apirest-micro
-```
 
-#### **Paso 2: Verificar Docker**
-```bash
-# Verificar que Docker esté funcionando
-docker --version
-docker-compose --version
-
-# Verificar que Docker Desktop esté ejecutándose
-docker ps
-```
-
-#### **Paso 3: Construcción Automatizada**
-
-**Opción A - Scripts Automatizados (Recomendado):**
-
-**Windows:**
-```batch
-.\build-all.bat
-```
-
-**Linux/Mac:**
-```bash
-chmod +x build-all.sh
-./build-all.sh
-```
-
-**Opción B - Construcción Manual:**
-
-```bash
-# Eureka Server
-cd eureka-server && ./mvnw clean package -DskipTests && cd ..
-
-# API Gateway
-cd api-gateway && ./mvnw clean package -DskipTests && cd ..
-
-# Microservicio de Usuarios
-cd micro-usuarios && ./mvnw clean package -DskipTests && cd ..
-
-# Microservicio de Direcciones
-cd micro-direcciones && ./mvnw clean package -DskipTests && cd ..
-```
-
-**Windows (PowerShell):**
-```powershell
-# Construcción manual en Windows
-cd eureka-server ; .\mvnw.cmd clean package -DskipTests ; cd ..
-cd api-gateway ; .\mvnw.cmd clean package -DskipTests ; cd ..
-cd micro-usuarios ; .\mvnw.cmd clean package -DskipTests ; cd ..
-cd micro-direcciones ; .\mvnw.cmd clean package -DskipTests ; cd ..
-```
-
-#### **Paso 4: Desplegar con Docker Compose**
-
-```bash
-# Levantar todos los servicios (primera vez)
-docker-compose up --build
-
-# Para ejecutar en segundo plano
-docker-compose up --build -d
+# Ejecutar todos los microservicios
+docker-compose up -d
 
 # Ver logs en tiempo real
 docker-compose logs -f
 
-# Ver logs de un servicio específico
-docker-compose logs -f micro-usuarios
-```
-
-#### **Paso 5: Verificación del Despliegue**
-
-**Esperar a que todos los servicios estén saludables (aprox. 2-3 minutos):**
-
-```bash
-# Verificar estado de contenedores
+# Verificar estado de servicios
 docker-compose ps
-
-# Verificar logs de salud
-docker-compose logs mysql
-docker-compose logs eureka-server
 ```
 
-**Servicios disponibles:**
-- **Eureka Server**: http://localhost:8761
-- **API Gateway**: http://localhost:8080
-- **Micro Usuarios**: http://localhost:8081 (acceso directo)
-- **Micro Direcciones**: http://localhost:8082 (acceso directo)
-- **MySQL**: localhost:3308 (puerto externo)
-
-#### **Paso 6: Verificación de Conectividad**
+### 🔧 Método Manual: Local Development
 
 ```bash
-# Verificar salud de servicios
-curl http://localhost:8761/actuator/health  # Eureka
-curl http://localhost:8080/actuator/health  # Gateway  
-curl http://localhost:8081/actuator/health  # Usuarios
-curl http://localhost:8082/actuator/health  # Direcciones
+# Prerrequisitos
+# - Java 17+
+# - Maven 3.8+
+# - MySQL 8.0
 
-# Verificar registro en Eureka
-curl http://localhost:8761/eureka/apps
+# 1. Clonar y configurar base de datos
+git clone <repository-url>
+cd udemy-apirest-micro
+mysql -u root -p < init-db.sql
+
+# 2. Compilar todos los servicios
+./build-all.sh  # Linux/Mac
+# O
+build-all.bat   # Windows
+
+# 3. Ejecutar servicios en orden
+cd eureka-server && mvn spring-boot:run &
+cd api-gateway && mvn spring-boot:run &
+cd micro-usuarios && mvn spring-boot:run &
+cd micro-direcciones && mvn spring-boot:run &
+cd micro-comentarios && mvn spring-boot:run &
 ```
 
-### 🛑 Comandos de Gestión
+## 🌐 Endpoints de la API
 
-```bash
-# Parar servicios
-docker-compose down
+### 👥 Usuarios (`/api/usuarios`)
 
-# Parar y eliminar volúmenes (limpieza completa)
-docker-compose down -v
-
-# Restart completo
-docker-compose restart
-
-# Rebuild completo (si hay cambios en código)
-docker-compose down -v && docker-compose up --build
-
-# Ver uso de recursos
-docker stats
-```
-
-## 🌐 Endpoints Disponibles
-
-### 📋 A través del API Gateway (Puerto 8080)
-
-#### **Usuarios** - `/usuarios`
 ```http
-GET    http://localhost:8080/usuarios                    # Listar todos los usuarios
-GET    http://localhost:8080/usuarios/{id}               # Obtener usuario por ID
-POST   http://localhost:8080/usuarios                    # Crear nuevo usuario
-PUT    http://localhost:8080/usuarios/{id}               # Actualizar usuario
-DELETE http://localhost:8080/usuarios/{id}               # Eliminar usuario
-GET    http://localhost:8080/usuarios/buscar?nombre=X    # Buscar por nombre
-GET    http://localhost:8080/usuarios/email/existe?email=X # Verificar email
+GET    /api/usuarios                    # Obtener todos los usuarios
+POST   /api/usuarios                    # Crear nuevo usuario
+GET    /api/usuarios/{id}               # Obtener usuario por ID
+PUT    /api/usuarios/{id}               # Actualizar usuario
+DELETE /api/usuarios/{id}               # Eliminar usuario
 ```
 
-#### **Direcciones** - `/direcciones`
-```http
-GET    http://localhost:8080/direcciones                      # Listar todas las direcciones
-GET    http://localhost:8080/direcciones/{id}                 # Obtener dirección por ID
-POST   http://localhost:8080/direcciones                      # Crear nueva dirección
-PUT    http://localhost:8080/direcciones/{id}                 # Actualizar dirección
-DELETE http://localhost:8080/direcciones/{id}                 # Eliminar dirección
-GET    http://localhost:8080/direcciones/usuario/{usuarioId}  # Direcciones por usuario
-GET    http://localhost:8080/direcciones/buscar/ciudad?ciudad=X # Buscar por ciudad
-GET    http://localhost:8080/direcciones/buscar/codigo-postal?codigoPostal=X # Por código postal
-```
-
-### 📊 Endpoints de Monitoreo
-
-- **Eureka Dashboard**: http://localhost:8761
-- **Gateway Actuator**: http://localhost:8080/actuator/health
-- **Usuarios Health**: http://localhost:8081/actuator/health
-- **Direcciones Health**: http://localhost:8082/actuator/health
-
-## 📄 Ejemplos de Payloads JSON
-
-### Usuario
+**Ejemplo Request:**
 ```json
+POST /api/usuarios
 {
   "nombre": "Juan Pérez",
-  "email": "juan.perez@email.com", 
+  "email": "juan@ejemplo.com",
   "telefono": "+56912345678"
 }
 ```
 
-### Dirección
+### 📍 Direcciones (`/api/direcciones`)
+
+```http
+GET    /api/direcciones/usuario/{usuarioId}    # Direcciones por usuario
+POST   /api/direcciones                        # Crear dirección
+GET    /api/direcciones/{id}                   # Obtener dirección por ID
+PUT    /api/direcciones/{id}                   # Actualizar dirección
+DELETE /api/direcciones/{id}                   # Eliminar dirección
+GET    /api/direcciones/comuna/{comuna}        # Buscar por comuna
+```
+
+**Ejemplo Request:**
 ```json
+POST /api/direcciones
 {
-  "calle": "Av. Principal 123",
+  "calle": "Av. Libertador 1234",
   "ciudad": "Santiago",
-  "estado": "Región Metropolitana",
-  "codigoPostal": "8320000",
+  "comuna": "Las Condes",
+  "codigoPostal": "7550000",
   "pais": "Chile",
   "usuarioId": 1
 }
 ```
 
-## 🗄️ Configuración de Base de Datos
+### 💬 Comentarios (`/api/comentarios`)
 
-El proyecto usa **MySQL 8** con las siguientes credenciales:
-
-### 📊 Credenciales de Conexión
-- **Host**: `mysql` (desde contenedores) / `localhost` (externo)
-- **Puerto**: `3308` (externo) / `3306` (interno)
-- **Base de datos**: `eureka_db`
-- **Usuario**: `yohel` o `root`
-- **Contraseña**: `mipasswordsegura`
-- **Root password**: `mipasswordsegura`
-
-### 🔌 Conexión Externa
-```bash
-# Conectar desde terminal
-mysql -h localhost -P 3308 -u root -p
-# Password: mipasswordsegura
-
-# O con usuario yohel
-mysql -h localhost -P 3308 -u yohel -p
-# Password: mipasswordsegura
+```http
+GET    /api/comentarios/usuario/{usuarioId}    # Comentarios por usuario
+POST   /api/comentarios                        # Crear comentario
+GET    /api/comentarios/{id}                   # Obtener comentario por ID
+PUT    /api/comentarios/{id}                   # Actualizar comentario
+DELETE /api/comentarios/{id}                   # Eliminar comentario
 ```
 
-### 📋 Inicialización Automática
-La base de datos se inicializa automáticamente con el archivo `init-db.sql` que contiene:
-- Creación de tablas para usuarios y direcciones
-- Datos de prueba iniciales
-- Configuración de relaciones FK
+**Ejemplo Request:**
+```json
+POST /api/comentarios
+{
+  "candidato": "Desarrollador Full Stack",
+  "comentario": "Excelente manejo de tecnologías modernas",
+  "usuarioId": 1
+}
+```
 
-## 🧪 Pruebas con Postman
+## 🗄️ Base de Datos
 
-### � Colección Incluida
+### Esquema de Tablas
+
+```sql
+-- Tabla usuarios
+CREATE TABLE usuarios (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    telefono VARCHAR(20)
+);
+
+-- Tabla direcciones  
+CREATE TABLE direcciones (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    calle VARCHAR(255) NOT NULL,
+    ciudad VARCHAR(100) NOT NULL,
+    comuna VARCHAR(100) NOT NULL,
+    codigo_postal VARCHAR(20),
+    pais VARCHAR(100) NOT NULL,
+    usuario_id BIGINT,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+-- Tabla comentarios
+CREATE TABLE comentarios (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    candidato VARCHAR(255) NOT NULL,
+    comentario TEXT NOT NULL,
+    usuario_id BIGINT,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+```
+
+### Datos de Ejemplo
+
+```sql
+-- Usuarios de prueba
+INSERT INTO usuarios (nombre, email, telefono) VALUES
+('Ana García', 'ana.garcia@email.com', '+56987654321'),
+('Carlos López', 'carlos.lopez@email.com', '+56912345678'),
+('María Silva', 'maria.silva@email.com', '+56998765432');
+
+-- Direcciones asociadas
+INSERT INTO direcciones (calle, ciudad, comuna, codigo_postal, pais, usuario_id) VALUES
+('Av. Providencia 1234', 'Santiago', 'Providencia', '7500000', 'Chile', 1),
+('Calle Los Leones 567', 'Santiago', 'Las Condes', '7550000', 'Chile', 2);
+
+-- Comentarios asociados
+INSERT INTO comentarios (candidato, comentario, usuario_id) VALUES
+('Desarrollador Frontend', 'Excelente conocimiento en React y Angular', 1),
+('Desarrollador Backend', 'Gran experiencia con Spring Boot y microservicios', 2);
+```
+
+## 🔧 Configuración
+
+### Variables de Entorno
+
+```bash
+# Base de datos
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=microservicios_db
+DB_USERNAME=micro_user
+DB_PASSWORD=micro_password
+
+# Puertos de servicios
+EUREKA_PORT=8761
+GATEWAY_PORT=8888
+USUARIOS_PORT=8081
+DIRECCIONES_PORT=8082
+COMENTARIOS_PORT=8083
+```
+
+### Archivo `application.properties` Común
+
+```properties
+# Configuración de base de datos
+spring.datasource.url=jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:microservicios_db}
+spring.datasource.username=${DB_USERNAME:micro_user}
+spring.datasource.password=${DB_PASSWORD:micro_password}
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# Configuración de Eureka Client
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+eureka.instance.prefer-ip-address=true
+```
+
+## 🧪 Testing con Postman
+
+### Colección Incluida
 El proyecto incluye una colección completa de Postman:
-- **Archivo**: `Microservicios-API-Collection.postman_collection.json`
-- **Environment**: `Microservicios-Environment.postman_environment.json`
+- **Archivo:** `Microservicios-API-Collection.postman_collection.json`
+- **Environment:** `Microservicios-Environment.postman_environment.json`
 
-### 🔄 Importar en Postman
+### Importar en Postman:
 1. Abrir Postman
-2. Import → Upload Files
+2. File → Import
 3. Seleccionar ambos archivos JSON
-4. Configurar environment en Postman
+4. Configurar environment con las URLs correctas
 
-### ✅ Pruebas Rápidas
-```bash
-# Crear usuario
-curl -X POST http://localhost:8080/usuarios \
-  -H "Content-Type: application/json" \
-  -d '{"nombre":"Test User","email":"test@email.com","telefono":"+56912345678"}'
-
-# Listar usuarios
-curl http://localhost:8080/usuarios
-
-# Crear dirección
-curl -X POST http://localhost:8080/direcciones \
-  -H "Content-Type: application/json" \
-  -d '{"calle":"Test Street 123","ciudad":"Santiago","estado":"RM","codigoPostal":"8320000","pais":"Chile","usuarioId":1}'
-```
+### Tests Incluidos:
+- ✅ Crear usuario
+- ✅ Listar usuarios  
+- ✅ Crear dirección para usuario
+- ✅ Crear comentario para usuario
+- ✅ Eliminar registros
+- ✅ Validaciones de errores
 
 ## 🐛 Solución de Problemas
 
-### 🔍 Diagnóstico Rápido
+### Servicios no se registran en Eureka
 ```bash
-# Verificar estado de todos los servicios
-docker-compose ps
-
-# Verificar salud de servicios
-docker-compose exec api-gateway wget -qO- http://localhost:8080/actuator/health
-```
-
-### ❌ Problemas Comunes
-
-#### **1. Servicios no se registran en Eureka**
-```bash
-# Verificar que Eureka esté funcionando
-docker-compose logs eureka-server
-
-# Verificar registro de servicios
+# Verificar que Eureka Server esté ejecutándose
 curl http://localhost:8761/eureka/apps
+
+# Revisar logs del servicio
+docker logs <service-name>
 ```
 
-#### **2. Error de conexión a MySQL**
+### Error de conexión a base de datos
 ```bash
-# Verificar inicialización de MySQL (puede tomar 30-60 segundos)
-docker-compose logs mysql
+# Verificar MySQL
+docker logs mysql-microservicios
 
-# Verificar conexión desde contenedor
-docker-compose exec mysql mysql -u root -pmipasswordsegura -e "SHOW DATABASES;"
+# Verificar credenciales en application.properties
+# Verificar que la base de datos exista
 ```
 
-#### **3. Puertos ya en uso**
+### Problemas de CORS
+La configuración CORS ya está habilitada en el API Gateway. Si persisten problemas:
+```java
+// Verificar ApiGatewayConfig.java
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+```
+
+## 📊 Monitoreo
+
+### Eureka Dashboard
+- URL: http://localhost:8761
+- Ver servicios registrados
+- Estado de salud de microservicios
+
+### Health Checks
 ```bash
-# Windows - Verificar puertos ocupados
-netstat -an | findstr :8080
-netstat -an | findstr :3308
+# Gateway
+curl http://localhost:8888/actuator/health
 
-# Linux/Mac
-netstat -tulpn | grep :8080
-lsof -i :3308
+# Usuarios  
+curl http://localhost:8081/actuator/health
 
-# Cambiar puertos en docker-compose.yml si es necesario
+# Direcciones
+curl http://localhost:8082/actuator/health
+
+# Comentarios
+curl http://localhost:8083/actuator/health
 ```
 
-#### **4. Problemas de memoria**
+## 🚀 Despliegue en Producción
+
+### Docker Compose Producción
 ```bash
-# Verificar uso de recursos
-docker stats
+# Build y deploy
+docker-compose up -d --build
 
-# Aumentar memoria para Docker Desktop (mínimo 4GB recomendado)
+# Escalar servicios
+docker-compose up -d --scale micro-usuarios=3
+
+# Logs de producción
+docker-compose logs -f --tail=100
 ```
 
-#### **5. Rebuild completo**
+### Consideraciones de Producción
+- ✅ Configurar SSL/TLS
+- ✅ Variables de entorno para credenciales
+- ✅ Health checks y monitoring
+- ✅ Load balancing
+- ✅ Backup de base de datos
+- ✅ Logging centralizado
+
+## 📋 Scripts de Utilidad
+
 ```bash
-# Limpieza completa y reconstrucción
-docker-compose down -v
-docker system prune -f
-docker volume prune -f
-docker-compose up --build
+# Construir todos los servicios
+./build-all.sh
+
+# Limpiar y reconstruir
+./clean-build.sh
+
+# Inicializar base de datos
+mysql -u root -p < init-db.sql
+
+# Ver logs de todos los servicios
+docker-compose logs -f
 ```
 
-### 🔄 Secuencia de Inicio Correcta
-1. **MySQL** (30-60 segundos para inicializar)
-2. **Eureka Server** (15-30 segundos)
-3. **API Gateway** (registrarse en Eureka)
-4. **Microservicios** (registrarse en Eureka)
+## 📄 Licencia
 
-## 🏗️ Arquitectura del Sistema
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles.
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Cliente/      │───▶│   API Gateway   │───▶│  Eureka Server  │
-│   Postman       │    │   Puerto 8080   │    │   Puerto 8761   │
-│                 │    │   (Load Balance)│    │ (Service Discov)│
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                │                       │
-                                │                       ▼
-                                │           ┌─────────────────────┐
-                                │           │   Service Registry  │
-                                │           │   (Health Checks)   │
-                                │           └─────────────────────┐
-                                │                                │
-                ┌───────────────┼──────────────┬─────────────────┘
-                ▼                              ▼
-    ┌─────────────────────┐        ┌─────────────────────┐
-    │  Micro-Usuarios     │        │ Micro-Direcciones   │
-    │   Puerto 8081       │        │   Puerto 8082       │
-    │ • CRUD Usuarios     │        │ • CRUD Direcciones  │
-    │ • Validaciones      │        │ • Relación con      │
-    │ • APIs REST         │        │   usuarios          │
-    └─────────────────────┘        └─────────────────────┘
-                │                                │
-                └─────────────┬──────────────────┘
-                              ▼
-                    ┌─────────────────────┐
-                    │      MySQL 8        │
-                    │   Puerto 3308       │
-                    │ Base: eureka_db     │
-                    │ • Tablas: usuarios  │
-                    │ • Tablas: direccions│
-                    │ • Datos iniciales   │
-                    └─────────────────────┘
-```
+## 👥 Contribución
 
-## 👨‍💻 Desarrollo Local
+1. Fork del proyecto
+2. Crear rama para feature (`git checkout -b feature/nueva-funcionalidad`)  
+3. Commit de cambios (`git commit -am 'Agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Crear Pull Request
 
-### 🔧 Configuración para Desarrollo
+## 📞 Soporte
 
-#### **Ejecutar sin Docker (para desarrollo)**
-```bash
-# 1. Configurar MySQL local
-mysql -u root -p
-CREATE DATABASE eureka_db;
-
-# 2. Ejecutar servicios en orden:
-cd eureka-server && ./mvnw spring-boot:run
-cd api-gateway && ./mvnw spring-boot:run  
-cd micro-usuarios && ./mvnw spring-boot:run
-cd micro-direcciones && ./mvnw spring-boot:run
-```
-
-#### **Hot Reload habilitado**
-- ✅ **Spring Boot DevTools** incluido en todos los proyectos
-- ✅ Cambios automáticos sin restart completo
-- ✅ LiveReload para desarrollo frontend
-
-#### **Perfiles de configuración**
-- `default`: Desarrollo local
-- `docker`: Contenedores (URLs internas)
-
-### 🧪 Testing y Desarrollo
-```bash
-# Ejecutar tests
-./mvnw test                    # Un proyecto específico
-./build-all.sh -test           # Todos los proyectos (si modificas script)
-
-# Desarrollo con watch mode
-./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.devtools.restart.enabled=true"
-```
-
-## 🚀 Producción
-
-### 📦 Build para Producción
-```bash
-# Build optimizado (sin DevTools)
-./mvnw clean package -Pprod -DskipTests
-
-# Crear imagen Docker optimizada
-docker-compose -f docker-compose.prod.yml up --build
-```
-
-### 🔒 Consideraciones de Seguridad
-- [ ] Cambiar credenciales por defecto de MySQL
-- [ ] Configurar HTTPS en API Gateway  
-- [ ] Implementar autenticación JWT
-- [ ] Usar secrets de Docker/Kubernetes
-- [ ] Configurar rate limiting
-
-### 📈 Monitoreo
-- **Actuator Health**: `/actuator/health`
-- **Metrics**: `/actuator/metrics`
-- **Info**: `/actuator/info`
-- **Eureka Dashboard**: `http://localhost:8761`
+Para reportar bugs o solicitar nuevas características, crear un issue en GitHub.
 
 ---
 
-## 🎯 Próximos Pasos
-
-### 🔄 Mejoras Sugeridas
-- [ ] Agregar autenticación y autorización
-- [ ] Implementar circuit breaker (Hystrix/Resilience4j)  
-- [ ] Configurar logging centralizado (ELK Stack)
-- [ ] Agregar cache distribuido (Redis)
-- [ ] Configurar métricas avanzadas (Prometheus + Grafana)
-- [ ] Implementar CI/CD pipeline
-- [ ] Agregar tests de integración
-
-### 📚 Recursos Adicionales
-- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
-- [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)
-- [Eureka Service Discovery](https://spring.io/guides/gs/service-registration-and-discovery/)
-- [Docker Compose](https://docs.docker.com/compose/)
-
----
-
-**¡Listo! Tu arquitectura de microservicios está funcionando con Docker! 🚀**
-
-**Desarrollado por**: NameYohell  
-**Proyecto**: Microservicios Spring Boot + Docker  
-**Versión**: 1.0.0
+**🏗️ Arquitectura de Microservicios con Spring Boot & Spring Cloud**

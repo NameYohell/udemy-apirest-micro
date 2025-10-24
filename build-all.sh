@@ -29,6 +29,7 @@ build_service "eureka-server"
 build_service "api-gateway"
 build_service "micro-usuarios"
 build_service "micro-direcciones"
+build_service "micro-comentarios"
 
 echo -e "${GREEN}🎉 ¡Todos los microservicios construidos exitosamente!${NC}"
 echo -e "${YELLOW}💡 Ahora puedes ejecutar: docker-compose up --build${NC}"
